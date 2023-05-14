@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  gap: 10px;
+
+  :global {
+    li {
+      border-radius: 30px;
+
+      &.selected {
+        background: #fe5f1e;
+
+        a {
+          color: #FFFFFF;
+        }
+      }
+
+      a {
+        color: #fe5f1e;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #fe5f1e;
+        border-radius: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+
+        &:hover {
+          background: #fe5f1e;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+}
