@@ -33,9 +33,11 @@ const FullPizza: FC = () => {
 
   return (
     <div className='container'>
-      <img src={pizza.imageUrl} alt="" />
-      <h2>{pizza.title}</h2>
-      <h4>{pizza.price} ₽</h4>
+      <div style={{ maxWidth: '280px', width: '100%' }}>
+        <img width={260} src={pizza.imageUrl} alt="" />
+        <h2 style={{ textAlign: 'center' }}>{pizza.title}</h2>
+        <h4 style={{ textAlign: 'center' }}>{pizza.price} ₽</h4>
+      </div>
     </div>
   )
 }

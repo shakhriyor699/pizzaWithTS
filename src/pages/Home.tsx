@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { useSelector } from 'react-redux'
 import Categories from '../components/Categories'
 import SortPopUp, { list } from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock'
 import Pagination from '../components/Pagination'
 import qs from 'qs'
-import { Link, useNavigate } from 'react-router-dom'
-
-import { IFilterSliceState, setFilters, setPageCount } from '../redux/slices/filterSlice'
+import { useNavigate } from 'react-router-dom'
+import { setFilters, setPageCount } from '../redux/slices/filterSlice'
 import { FetchPizzasType, fetchPizzas } from '../redux/slices/pizzasSlice'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 
@@ -23,19 +21,19 @@ const Home: FC = () => {
   const isMounted = useRef(false)
 
 
-  // useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = qs.parse(window.location.search.substring(1)) as unknown as FetchPizzasType
-  //     const sort = list.find(obj => obj.sortProperty === params.sortBy)
-  //     dispatch(setFilters({
-  //       categoryId: Number(params.category),
-  //       pageCount: Number(params.pageCount),
-  //       searchValue: params.searchValue,
-  //       sort: sort || list[0]
-  //     }))
-  //     isSearch.current = true
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1)) as unknown as FetchPizzasType
+      const sort = list.find(obj => obj.sortProperty === params.sortBy)
+      dispatch(setFilters({
+        categoryId: Number(params.category),
+        pageCount: Number(params.pageCount),
+        searchValue: params.searchValue,
+        sort: sort || list[0]
+      }))
+      isSearch.current = true
+    }
+  }, [])
 
   useEffect(() => {
     isSearch.current = false
@@ -66,17 +64,17 @@ const Home: FC = () => {
   }
 
 
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     const queryString = qs.stringify({
-  //       sortProperty: sort.sortProperty,
-  //       categoryId,
-  //       pageCount
-  //     })
-  //     navigate(`?${queryString}`)
-  //   }
-  //   isMounted.current = true
-  // }, [categoryId, sort.sortProperty, pageCount]);
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        pageCount
+      })
+      navigate(`?${queryString}`)
+    }
+    isMounted.current = true
+  }, [categoryId, sort.sortProperty, pageCount]);
 
   const skeleton = [...new Array(10)].map((_, index) => <Skeleton key={index} />)
   const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)
